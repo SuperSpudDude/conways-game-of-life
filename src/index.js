@@ -2,11 +2,14 @@ const height = 500, width = 500;
 const cellPerRow = 50;
 const rows = cellPerRow, cols = cellPerRow;
 const cellSize = height/cellPerRow;
+var isPaused = false;
 
 function generation(ctx, grid){
-    ctx.clearRect(0,0,width,height);
-    draw(ctx, grid);
-    grid = nextGeneration(grid);
+    if(!isPaused){
+        ctx.clearRect(0,0,width,height);
+        draw(ctx, grid);
+        grid = nextGeneration(grid);
+    }
     requestAnimationFrame(() => generation(ctx, grid));
 }
 
@@ -67,11 +70,24 @@ function draw(ctx, grid){
     }
 }
 
+function play(){ isPaused = false;}
+
+function pause(){ isPaused = true; }
+
+function refresh(ctx){
+    generation(ctx, getGrid());
+}
 
 
 window.onload = () =>{
+    // set up page elements
     const c = document.getElementById("myCanvas");
     const ctx = c.getContext("2d");
+    document.getElementById("btnPlay").onclick = function(){ play()};
+    document.getElementById("btnPause").onclick = function(){ pause()};
+    document.getElementById("btnRefresh").onclick = function(){ refresh(ctx)};
+
+    // initialise grid
     const grid = getGrid();
     draw(ctx, grid);
     generation(ctx, grid);
