@@ -74,7 +74,7 @@ function play(){ isPaused = false;}
 
 function pause(){ isPaused = true; }
 
-function refresh(ctx){
+function reset(ctx){
     generation(ctx, getGrid());
 }
 
@@ -85,7 +85,7 @@ window.onload = () =>{
     const ctx = c.getContext("2d");
     document.getElementById("btnPlay").onclick = function(){ play()};
     document.getElementById("btnPause").onclick = function(){ pause()};
-    document.getElementById("btnRefresh").onclick = function(){ refresh(ctx)};
+    document.getElementById("btnReset").onclick = function(){ reset(ctx)};
 
     // initialise grid
     const grid = getGrid();
